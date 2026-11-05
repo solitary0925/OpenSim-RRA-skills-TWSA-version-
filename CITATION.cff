@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "Please cite the TWSA method paper and record the version/commit of this adaptation."
 title: "OpenSim RRA skills - TWSA version"
 type: software
-version: 1.3.0
+version: 1.3.1
 date-released: 2026-11-05
 authors:
   - name: "OpenSim RRA skill contributors"

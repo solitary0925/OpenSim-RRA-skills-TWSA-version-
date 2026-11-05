@@ -1,6 +1,6 @@
 # OpenSim RRA skills — TWSA version
 
-Version **1.3.0**. A Codex skill plus a prepared-job MATLAB TWSA/RRA adapter for the original-knee gait2392/CGM24 profile (18 active coordinates,92 muscles). It runs independent L/R gait-stance jobs, retains diagnostics when residual limits are not met, and keeps model/motion/provenance review visible.
+Version **1.3.1**. A Codex skill plus a prepared-job MATLAB TWSA/RRA adapter for the original-knee gait2392/CGM24 profile (18 active coordinates,92 muscles). It runs independent L/R gait-stance jobs, retains diagnostics when residual limits are not met, and keeps model/motion/provenance review visible.
 
 ## What changed
 
@@ -51,3 +51,9 @@ Original code: https://github.com/FxnlBiomechLab/twsa-optimization-for-rra . Pre
 ## Alternatives
 
 The [evidence note](references/alternative-methods.md) discusses MocoTrack/direct collocation, AddBiomechanics, enhanced REA and proposed constrained/Bayesian weight search. Published results on other datasets do not establish superiority to TWSA for a short one-plate stance, and no optimizer can recover unknown measured floor contact without extra evidence.
+
+## Limitations and future methods
+
+The [limitation register](references/limitations.md) records finite/seed-dependent search, residual-versus-motion fidelity, short-window and independent mass/COM calibration sensitivity, missing-contact limits, model/backend scope and incomplete comparative evidence.
+
+Future candidates include torque-driven MocoTrack, AddBiomechanics-inspired shared subject calibration, enhanced REA, fidelity-constrained/Pareto search, log-space Bayesian optimization, CMA-ES, multiple seeds and uncertainty-weighted least squares. They are documented research directions, not implemented replacements or proven improvements on the present dataset. Compare common inputs/windows and independent motion fidelity before adoption; current runtime defaults and selection rules are unchanged. Primary papers and study-specific limits remain in [the evidence note](references/alternative-methods.md).

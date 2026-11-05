@@ -5,7 +5,7 @@ description: Run and review per-L/R gait-stance RRA/TWSA with provenance and con
 
 # OpenSim Vicon RRA
 
-Version 1.3.0 adds a portable prepared-job MATLAB adapter for the original-knee gait2392/CGM24 profile (18 active coordinates, 92 muscles), stance-window execution policy and diagnostic result retention. It is not a universal C3D converter or arbitrary-model optimizer. MATLAB TWSA is bundled with upstream MIT attribution; the Python backend still needs a separately verified compatible optimizer.
+Version 1.3.1 includes a portable prepared-job MATLAB adapter for the original-knee gait2392/CGM24 profile (18 active coordinates, 92 muscles), stance-window execution policy, diagnostic result retention and an explicit limitation/future-method register. It is not a universal C3D converter or arbitrary-model optimizer. MATLAB TWSA is bundled with upstream MIT attribution; the Python backend still needs a separately verified compatible optimizer.
 
 Read [stance execution](references/stance-execution.md) before preparation/running, [environment](references/environment.md) for runtime probes, [execution](references/execution.md) for replay, and [selection](references/selection.md) for ranking. Cite [Sturdy, Silverman & Pickle (2022)](https://doi.org/10.1016/j.jbiomech.2022.111087); see [attribution](references/twsa-attribution.md).
 
@@ -60,4 +60,6 @@ Rerun only the user-selected failed/nonqualified jobs, preserve previous selecte
 
 Use scripts/run_stance_job.py for a provenance-checked prepared MATLAB job. It validates the profile, exact L/R window and no-COM-stop/continue-at-cap policy, probes the environment and launches only that job. Read the handoff contract and commands in [stance execution](references/stance-execution.md). The skill does not silently patch an external Python optimizer to adopt this policy; verify implementation before using it.
 
-When asked to compare alternatives or improve the optimizer, read [alternative methods](references/alternative-methods.md). Distinguish published comparisons from proposed mathematical adaptations; do not replace the chosen TWSA run automatically.
+## Limitations and future methods
+
+When discussing limitations, explaining persistent nonqualification or planning improvements, read [limitations and future directions](references/limitations.md). It records finite/seed-dependent search, force-versus-motion fidelity, short-window and mass/COM sensitivity, contact-information limits, model/backend scope and gaps in comparative evidence. Treat MocoTrack, AddBiomechanics-inspired shared calibration, enhanced REA, constrained/Pareto search, Bayesian optimization, CMA-ES, multi-start sensitivity and uncertainty-weighted least squares as future comparison candidates, not enabled alternatives. Read [alternative methods](references/alternative-methods.md) for their primary references and transfer limits. Do not change current defaults or claim any candidate is superior for the present data without a controlled comparison.
