@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "mode": "force_limits_then_rank",
+  "execution": {
+    "backend": null,
+    "choice": {
+      "status": "pending",
+      "confirmation_source": ""
+    },
+    "python_executable": null,
+    "matlab_executable": null,
+    "opensim_root": null,
+    "opensim_cmd": null,
+    "twsa_root": null,
+    "search_roots": [],
+    "timeout_seconds": 60
+  },
+  "force_profile": null,
+  "choice": {
+    "status": "pending",
+    "confirmation_source": ""
+  },
+  "ranking_objective": null,
+  "ranking_choice": {
+    "status": "pending",
+    "confirmation_source": ""
+  },
+  "coordinate_ranking": {
+    "rotation_reference_deg": 3.0,
+    "translation_reference_m": 0.02,
+    "power": 4.0
+  },
+  "stop_on_first_force_pass": false,
+  "search": {
+    "max_proposals": 200,
+    "random_seed": 42
+  },
+  "stance_processing": {
+    "mode": "independent_lr_stance",
+    "threshold_N": 20,
+    "window_policy": "longest_contiguous_external_force_complete_within_target",
+    "preserve_original_time": true
+  },
+  "mass_calibration": {
+    "com_shift_limit_mm": null,
+    "com_displacement_stop_enabled": false,
+    "initial_passes": 1,
+    "max_additional_passes": 10,
+    "tolerance_kg": 0.001,
+    "nonconvergence_policy": "warn_and_continue_at_iteration_limit"
+  },
+  "output_policy": {
+    "qualified_directory": "final_original_frame",
+    "nonqualified_directory": "diagnostic_original_frame",
+    "preserve_attempts": true,
+    "report_rms_max_in_chat": true
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenSim Vicon RRA"
+  short_description: "选择MATLAB或Python并检测环境，再按残余力阈值及J或E筛选RRA结果"
+  default_prompt: "使用 $opensim-vicon-rra 选择MATLAB或Python并检查对应环境，再选择MAX10/RMS5或MAX25/RMS10、J最小或E最小，核查输入和报告最终候选。"

@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "Please cite the TWSA method paper and record the version/commit of this adaptation."
+title: "OpenSim RRA skills - TWSA version"
+type: software
+version: 1.3.0
+date-released: 2026-11-05
+authors:
+  - name: "OpenSim RRA skill contributors"
+repository-code: "https://github.com/solitary0925/OpenSim-RRA-skills-TWSA-version-"
+license: MIT
+preferred-citation:
+  type: article
+  title: "Automated optimization of residual reduction algorithm parameters in OpenSim"
+  authors:
+    - family-names: Sturdy
+      given-names: "Jordan T."
+    - family-names: Silverman
+      given-names: "Anne K."
+    - family-names: Pickle
+      given-names: "Nathan T."
+  journal: "Journal of Biomechanics"
+  year: 2022
+  volume: 137
+  start: 111087
+  doi: "10.1016/j.jbiomech.2022.111087"
