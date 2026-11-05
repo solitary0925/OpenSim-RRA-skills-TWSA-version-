@@ -34,10 +34,13 @@ These are proposed extensions, not demonstrated improvements on S02:
 
 - **Feasibility-first constrained or Pareto search:** preserve coordinate/marker/pelvis/foot fidelity bounds and minimize residuals among feasible points. If no point is feasible, report infeasibility rather than an anatomically distorted low-residual winner. This is a separate explicit selection mode; it must not silently replace the current force-first J/E rule.
 - **Log-space Bayesian optimization:** let `z=log(weight)` and learn a surrogate for expensive native evaluations. Parameter grouping, numerical-failure classification and feasibility-aware acquisition are important at this model's dimension. It might use a fixed compute budget more efficiently; it cannot guarantee fewer solves or better results.
+- **CMA-ES:** a derivative-free continuous optimizer can adapt a joint search distribution over log-weights, including parameter correlations. It is a plausible comparator for the current random perturbation loop; population evaluations may cost more than the available budget, and no superiority on this RRA dataset has been established. See Hansen N (2016), *The CMA Evolution Strategy: A Tutorial*, https://arxiv.org/abs/1604.00772 .
 - **Multi-start sensitivity:** repeat a small number of predeclared seeds with the same budget, then report feasible yield, spread and repeatability; do not cherry-pick a seed without preserving other searches.
 - **Shared subject inertia and robust calibration:** fit one positive, anatomically constrained mass distribution/COM across several trustworthy windows, regularized towards measurements. Never allow inferred nuisance forces or load offsets to absorb unmeasured floor contact without validation.
 
 For the Bayesian optimization concept: Snoek J, Larochelle H, Adams RP (2012). *Practical Bayesian Optimization of Machine Learning Algorithms.* NeurIPS25. https://arxiv.org/abs/1206.2944 . Its benchmark is machine-learning hyperparameter tuning, not RRA; applying it here is an inference.
+
+For an older dynamics-specific estimation idea: Kuo AD (1998), *A least-squares estimation approach to improving the precision of inverse dynamics computations*, Journal of Biomechanical Engineering120:148–159, https://doi.org/10.1115/1.2834295 . Its weighted least-squares formulation combines redundant kinematic/force measurements and addresses constant bias. This suggests measurement-uncertainty weighting and bias auditing; it is not proof that arbitrary unknown floor-contact forces can be reconstructed for the present study.
 
 ## Proposed comparison protocol
 
