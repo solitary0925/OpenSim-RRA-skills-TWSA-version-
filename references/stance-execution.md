@@ -65,11 +65,19 @@ Filter each FX/FY/FZ RMS and absolute peak using the chosen MAX10/RMS5 orMAX25/R
 - Qualified: export the chosen replay to `final_original_frame`.
 - None qualified: keep `selected=null`; replay the valid global-J-minimum, verify it, and export to `diagnostic_original_frame`. Label it diagnostic, including if its errors are very large.
 - Failed replay: keep attempts/logs; do not claim a verified model/motion export.
-- Both exports retain original-frame `.osim`/`.mot`, per-side stance motion, marker/IK references, external loads, geometry, selected tracking tasks and frame/replay evidence. All candidates remain in `inputs/RRA_optWeights`.
+- Both exports retain original-frame `.osim`/`.mot`, per-side stance motion, marker/IK references, external loads, geometry, selected tracking tasks and frame/replay evidence. Candidate outputs remain in `inputs/RRA_optWeights` pending the cleanup decision below.
 
 Write JSON/CSV/Markdown summaries. In chat include trial, side, attempted/valid/failed counts, result type, per-direction residual RMS/peak (N) or explicitly named maximum-component summaries, marker RMS/Max (mm), and mass/COM warnings. Maximum across component RMS is not a resultant RMS. Residual moments are separate (Nm), and20N event detection is separate from10/25N residual limits.
 
 For batches verify each job's final status, full coverage, native replay, exported files and protected input hashes. A report reader must read an atomic checkpoint or a copied/retried snapshot; never let an incomplete live MAT read abort result aggregation. On crash do not start a duplicate queue or treat stale `running` as proof of a live solver. Reconstruct/check RNG state before resuming a search. If automatic chat monitoring is available and authorized, notify on completion/interruption/actionable input faults; avoid routine unchanged progress messages.
+
+## Post-run candidate cleanup
+
+1. After reporting the results, identify the completed run or batch and build a deletion list from its saved selection records. Record the best iteration for each job and the number of nonwinning output directories. Include only jobs with a verified final export. List failed, unfinished or ambiguous jobs separately and retain their outputs for diagnosis.
+2. Ask the user in the conversation, for example “这批 RRA 已完成。要删除这批非最佳候选的原始输出吗？会保留每段最佳结果，未达标的保留最小 J 诊断结果，评分和日志都保留。” State the specific scope and that deleted raw outputs require a rerun to recover. Keep all outputs if the user declines or has yet to confirm. Apply confirmation only to the stated scope.
+3. Preserve the selected candidate under the original force and ranking rules, even when it differs from the global minimum J. For `selected=null`, preserve the verified minimum-J diagnostic candidate and its `diagnostic_original_frame` export with the diagnostic label. Protect final models, motion, loads, weights, replay evidence, calibration and original inputs, and any files still used by downstream analyses. Record referenced candidates excluded from the deletion list.
+4. Preserve all available per-candidate RMS/peak, J/E, validity and failure records, selection reports, configurations, checkpoints and logs. Copy logs and failure records stored inside deletion targets to a retained folder before deleting those targets. Verify the resolved paths are inside the approved job output folders and match the enumerated nonwinning candidate directories. Remove only the approved raw outputs, leaving final exports and retained records in place.
+5. Verify the planned targets are gone and the best candidate, its final export, retained scores/logs and referenced files remain readable and unchanged by checksum where applicable. Save a cleanup manifest with the confirmation, kept iterations, removed paths, exclusions and verification results. Report counts and any deletion failures. Use saved scores for later review, since raw data for pruned candidates would require replay.
 
 ## Evidence and attribution
 

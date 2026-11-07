@@ -37,7 +37,9 @@ Keep marker RMS/Max, pelvis translation/rotation, ankle/subtalar deviations, sta
 
 Replay the **selected candidate's** weights using the same calibrated model, loads, timing, filtering, native executable and COM-disabled setup. Verify force eligibility and coordinate error reproduce; archive final model/motion from that candidate. Do not keep publishing an earlier J-minimum `RRA_Final` under the new label. The selector alone does not run this replay, copy a final model or certify research validity; the coordinating agent/verified runner performs it. Reconstruct any original-frame output with the same documented inverse transform.
 
-Preserve all search attempts, comparators, both decisions, J/E definitions, counts, coordinate errors, warnings, hashes and final replay evidence in JSON/CSV/Markdown. Do not overwrite historical outputs just to install or update this skill. Newly found source-data problems require a user repair, explicit skip or retain-for-review decision before dependent scientific analyses; prior applicable decisions remain valid.
+Preserve candidate scores, comparator summaries, both decisions, J/E definitions, counts, coordinate errors, warnings, logs, hashes and final replay evidence in JSON/CSV/Markdown and the native logs. Keep raw candidate outputs until the user confirms cleanup for the completed run or batch. Newly found source-data problems require a user repair, explicit skip or retain-for-review decision before dependent scientific analyses; prior applicable decisions remain valid.
+
+After every run or batch finishes, report the verified results and ask whether to delete its nonwinning candidate outputs. Name the scope and what will be retained. On explicit confirmation, keep the original selected winner for each search, or the valid minimum-J diagnostic when none qualifies, together with its verified final export, all candidate scores and logs. A previous cleanup decision does not apply to a new run. Follow [post-run candidate cleanup](references/stance-execution.md#post-run-candidate-cleanup) for the deletion plan, dependencies and verification.
 
 ## Input and coordinate invariants
 

@@ -81,11 +81,12 @@ not authorize selecting an unqualified fallback.
 
 Export the matching model, motion, tasks, ExternalLoads, force data and geometry
 with the inverse coordinate transform if needed. Keep native residuals in
-their documented frame, and preserve every previous candidate/result. Report
+their documented frame. Retain raw candidates pending the user decision in
+[post-run candidate cleanup](stance-execution.md#post-run-candidate-cleanup). Report
 independent warnings and ask for the user's disposition before advancing a
 newly problematic result into SO/CMC/JRA. Do not silently relabel diagnostics
 as universally validated research results.
 
 ## No-qualified-candidate delivery
 
-A missing force-qualified candidate is not a reason to discard the completed search. Keep selected=null and export a verified replay of the valid global-J-minimum in diagnostic_original_frame. Keep all attempts and emit the residual/marker metrics with a diagnostic label. The runner, rather than select_candidate.py alone, produces these native artifacts. See stance-execution.md.
+Keep `selected=null` when no candidate qualifies. Export a verified replay of the valid global-J-minimum to `diagnostic_original_frame` and report residual/marker metrics with a diagnostic label. The runner produces these native artifacts. Preserve attempt scores and logs, and keep raw candidate outputs pending the user decision in [post-run candidate cleanup](stance-execution.md#post-run-candidate-cleanup).
