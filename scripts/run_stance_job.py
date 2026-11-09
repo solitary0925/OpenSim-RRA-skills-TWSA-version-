@@ -2,6 +2,7 @@
 from pathlib import Path
 import argparse,hashlib,json,math,os,subprocess,sys
 from select_candidate import validate_config
+from input_filter6 import PROFILE, NO_ADDED, choice, verify_receipt
 SKILL=Path(__file__).resolve().parent.parent
 def read(p):return json.loads(Path(p).read_text(encoding='utf-8-sig'))
 def sha(p):
@@ -29,7 +30,12 @@ def validate_prepared_job(job):
     if m.get('nonconvergence_policy')!='warn_and_continue_at_iteration_limit':raise ValueError('Record warning-and-continue policy at bounded mass cap')
     for field in ('max_proposals','random_seed'):
         if isinstance(c.get(field),bool) or not isinstance(c.get(field),int) or c[field]<(1 if field=='max_proposals' else 0):raise ValueError('Invalid '+field)
-    if c.get('processing')!='no_added_filtering':raise ValueError('Bundled adapter supports recorded no-added-filtering profile only')
+    processing = c.get('processing')
+    decision = c.get('filtering_decision')
+    if processing not in (NO_ADDED,PROFILE) or (decision and decision.get('choice')!=processing):
+        raise ValueError('Prepared job processing must match the confirmed filtering choice')
+    if decision is not None:
+        choice(decision)
     required=['inputs/base.osim','inputs/ik.mot','inputs/grf.mot','inputs/ExternalLoads.xml','heading_transform.json','fidelity_config.json','observations.npz']
     if not all((job/p).is_file() for p in required) or not (job/'inputs/Geometry').is_dir():raise ValueError('Incomplete prepared-job handoff')
     for directory,names in [('original_IK_directory',['ik.mot','markers.trc']),('original_force_directory',['external_loads.mot','ExternalLoads.xml'])]:
@@ -38,6 +44,20 @@ def validate_prepared_job(job):
     if manifest.get('window_s')!=window:raise ValueError('Manifest window mismatch')
     protected=manifest.get('prepared_inputs',{});sources=manifest.get('source_hashes',{})
     if not sources or str(job/'job_config.json') not in protected:raise ValueError('Source/config provenance missing')
+    if processing==PROFILE:
+        receipt = (job/c['input_filtering_record']).resolve(strict=True)
+        if sources.get(str(receipt))!=sha(receipt):
+            raise ValueError('Filter receipt must be protected by the prepared job source audit')
+        record = verify_receipt(receipt,decision,sources)
+        if 'wrench' in record['signals']:
+            original_frame = Path(c['original_force_directory'])/'external_loads.mot'
+            if sha(original_frame)!=record['signals']['wrench']['outputs']['wrench']['sha256']:
+                raise ValueError('Original-frame export must carry the same filtered wrench used to prepare the job')
+        working = c.get('filtered_working_inputs',{})
+        names = {'kinematics':'inputs/ik.mot','wrench':'inputs/grf.mot'}
+        if any(not protected.get(str(job/names[signal])) or working.get(signal)!=protected[str(job/names[signal])]
+               for signal in choice(decision)):
+            raise ValueError('Bind the filtered signals to the verified working-frame IK and load files')
     for name in required:
         if str(job/name) not in protected:raise ValueError('Prepared input not protected: '+name)
     for p,h in {**sources,**protected}.items():

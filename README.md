@@ -1,8 +1,10 @@
 # OpenSim RRA skills — TWSA version
 
-Version **1.3.1**. A Codex skill plus a prepared-job MATLAB TWSA/RRA adapter for the original-knee gait2392/CGM24 profile (18 active coordinates,92 muscles). It runs independent L/R gait-stance jobs, retains diagnostics when residual limits are not met, and keeps model/motion/provenance review visible.
+Version **1.4.0**. A Codex skill plus a prepared-job MATLAB TWSA/RRA adapter for the original-knee gait2392/CGM24 profile (18 active coordinates,92 muscles). It runs independent L/R gait-stance jobs, retains diagnostics when residual limits are not met, and keeps model/motion/provenance review visible.
 
 ## What changed
+
+- **Optional input filtering.** Confirm no added filtering or a fourth-order Butterworth low-pass at 6 Hz applied forward and backward for zero phase. Select kinematics, force and torque, or both. The prefilter force defines the 20 N events after any confirmed baseline correction. The prepared MATLAB job verifies the filtered input receipt and leaves the native low-pass disabled. See [input filtering](references/input-filtering.md).
 
 - **No100mm COM hard stop.** Save COM displacement and warnings; never discard the search solely on that magnitude.
 - **Bounded mass iteration with continuation.** One initial pass and at most10 additional passes,0.001kg early tolerance. If the cap is reached, continue using the last finite valid model and report nonconvergence. Invalid/nonfinite models and native failures are still errors.

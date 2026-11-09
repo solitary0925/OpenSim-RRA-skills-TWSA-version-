@@ -5,7 +5,7 @@ description: Run and review per-L/R gait-stance RRA/TWSA with provenance and con
 
 # OpenSim Vicon RRA
 
-Version 1.3.1 includes a portable prepared-job MATLAB adapter for the original-knee gait2392/CGM24 profile (18 active coordinates, 92 muscles), stance-window execution policy, diagnostic result retention and an explicit limitation/future-method register. It is not a universal C3D converter or arbitrary-model optimizer. MATLAB TWSA is bundled with upstream MIT attribution; the Python backend still needs a separately verified compatible optimizer.
+Version 1.4.0 includes a prepared-job MATLAB adapter for original-knee gait2392/CGM24, optional input filtering, stance-window execution and diagnostic result retention. MATLAB TWSA is bundled with upstream MIT attribution. The Python backend needs a separately verified compatible optimizer.
 
 Read [stance execution](references/stance-execution.md) before preparation/running, [environment](references/environment.md) for runtime probes, [execution](references/execution.md) for replay, and [selection](references/selection.md) for ranking. Cite [Sturdy, Silverman & Pickle (2022)](https://doi.org/10.1016/j.jbiomech.2022.111087); see [attribution](references/twsa-attribution.md).
 
@@ -18,6 +18,8 @@ Run `scripts/check_environment.py --config <run.json> --output <new_check_folder
 Report missing files, packages, licensing/startup or version issues in the conversation. Do not silently switch backend, install packages or rewrite global Java paths. After a repair, rerun the environment check. Both backends can be inspected without choosing a job using `--backend matlab` or `--backend python`; such reports are marked inspection-only and do not record a user run choice. The probe creates only isolated local logs/preferences, performs zero RRA solves, and does not replace trial-input preflight.
 
 ## User choice before a new run
+
+Before a new batch, ask whether to add fourth-order Butterworth 6 Hz forward–backward zero-phase low-pass filtering. Offer no additional filtering and, if selected, confirm kinematics, force/torque, or both. Prepare and verify the inputs before mass calibration using [input filtering](references/input-filtering.md).
 
 Offer `force_limits_then_rank` as an alternative to an existing study selection method. Present two ordered choices: (1) “本次RRA残余力标准选择 MAX10 N / RMS5 N，还是 MAX25 N / RMS10 N？” (2) “在残余力达标的候选中，选择 J 最小（综合残余与坐标误差），还是 E 最小（优先贴近原始IK坐标）？” The second choice applies after MAX10/RMS5 and is also available after MAX25/RMS10. Record both actual decisions separately in [the configuration](assets/selection.example.json). Reuse current applicable choices; if only one stage is already known, ask only the missing stage. A request to add these options does not itself choose them for a future run. Do not silently default to E or substitute a 20 N peak profile.
 

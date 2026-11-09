@@ -1,6 +1,7 @@
 {
   "schema_version": 2,
   "mode": "force_limits_then_rank",
+  "filtering_decision": {"status": "pending", "choice": null, "signals": [], "upstream_filtering": {}, "confirmation_source": ""},
   "execution": {
     "backend": null,
     "choice": {

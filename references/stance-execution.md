@@ -1,6 +1,6 @@
 # Per-L/R stance execution and prepared-job contract
 
-This is a reusable policy derived from the S02 workflow, not a rule that all trials are scientifically valid. The bundled adapter supports an original-knee gait2392/CGM24 model with18 active coordinates and92 muscles. It requires no-added-filtering input prepared through the verified IK/load workflow. Do not unlock joints or substitute another model to pass a topology check. Python backend availability is checked separately; it is not the same as a validated implementation of this MATLAB execution policy.
+This is a reusable policy derived from the S02 workflow, not a rule that all trials are scientifically valid. The bundled adapter supports an original-knee gait2392/CGM24 model with18 active coordinates and92 muscles. Prepare verified IK and load inputs using the confirmed [input filter option](input-filtering.md). Do not unlock joints or substitute another model to pass a topology check. Python backend availability is checked separately; it is not the same as a validated implementation of this MATLAB execution policy.
 
 ## Preparation
 
@@ -27,7 +27,7 @@ job/
     Geometry/
 ```
 
-`job_config.json` includes the confirmed selection config, `subject`, `trial`, `job_dir`, `python_executable`, `opensim_root`, `max_proposals`, `random_seed`, `processing="no_added_filtering"`, `target_side`, `window_s=[a,b]`, and exactly one `phases` event with `side`, explicit positive `plate`, original20N `onset_s`/`offset_s`, and `window_start_s`/`window_end_s`. For censored events provide the available original event bounds under `stance_window.target_window_s`; retain censor flags. Also provide `original_IK_directory` (ik.mot, markers.trc), `original_force_directory` (external_loads.mot, ExternalLoads.xml), `window_policy` and `load_assumption_confirmation`. Use the actual local paths on the receiving machine. The launcher resolves execution paths and the shipped engine locally; it does not carry an author's drive letters.
+`job_config.json` includes the confirmed selection config, `subject`, `trial`, `job_dir`, `python_executable`, `opensim_root`, `max_proposals`, `random_seed`, `processing` and `filtering_decision` as described in [input filtering](input-filtering.md), `target_side`, `window_s=[a,b]`, and exactly one `phases` event with `side`, explicit positive `plate`, original20N `onset_s`/`offset_s`, and `window_start_s`/`window_end_s`. For censored events provide the available original event bounds under `stance_window.target_window_s`; retain censor flags. Also provide `original_IK_directory` (ik.mot, markers.trc), `original_force_directory` (external_loads.mot, ExternalLoads.xml), `window_policy` and `load_assumption_confirmation`. Use the actual local paths on the receiving machine. The launcher resolves execution paths and the shipped engine locally; it does not carry an author's drive letters.
 
 `input_manifest.json` has `source_hashes` and `prepared_inputs` maps from absolute local file paths to SHA256, plus `window_s`. Include the job config and all prepared files; any changed file blocks the job instead of rewriting old provenance. Geometry must be available beside the model and included in the handoff provenance as appropriate.
 
